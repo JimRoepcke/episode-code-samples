@@ -157,7 +157,7 @@ final class SubscribeCalloutCell: UITableViewCell {
 
 final class EpisodeCell: UITableViewCell {
   private let blurbLabel = UILabel()
-  private let labelsStackView = UIStackView()
+  private let contentStackView = UIStackView()
   private let posterImageView = UIImageView()
   private let rootStackView = UIStackView()
   private let sequenceAndDateLabel = UILabel()
@@ -172,7 +172,7 @@ final class EpisodeCell: UITableViewCell {
     with(self, baseTableViewCellStyle)
     with(self.blurbLabel, longFormLabelStyle)
     with(
-      self.labelsStackView,
+      self.contentStackView,
       concat(
         baseStackViewStyle,
         verticalStackViewStyle,
@@ -186,12 +186,12 @@ final class EpisodeCell: UITableViewCell {
     with(self.watchNowButton, primaryTextButtonStyle)
     self.sequenceAndDateLabel.font = UIFont.preferredFont(forTextStyle: .caption1).smallCaps
 
-    self.labelsStackView.addArrangedSubview(self.sequenceAndDateLabel)
-    self.labelsStackView.addArrangedSubview(self.titleLabel)
-    self.labelsStackView.addArrangedSubview(self.blurbLabel)
-    self.labelsStackView.addArrangedSubview(self.watchNowButton)
+    self.contentStackView.addArrangedSubview(self.sequenceAndDateLabel)
+    self.contentStackView.addArrangedSubview(self.titleLabel)
+    self.contentStackView.addArrangedSubview(self.blurbLabel)
+    self.contentStackView.addArrangedSubview(self.watchNowButton)
     self.rootStackView.addArrangedSubview(self.posterImageView)
-    self.rootStackView.addArrangedSubview(self.labelsStackView)
+    self.rootStackView.addArrangedSubview(self.contentStackView)
     self.contentView.addSubview(self.rootStackView)
 
     NSLayoutConstraint.activate([

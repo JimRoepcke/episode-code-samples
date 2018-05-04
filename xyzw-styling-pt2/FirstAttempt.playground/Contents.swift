@@ -83,7 +83,7 @@ final class SubscribeCalloutCell: UITableViewCell {
 
 final class EpisodeCell: UITableViewCell {
   private let blurbLabel = UILabel()
-  private let labelsStackView = UIStackView()
+  private let contentStackView = UIStackView()
   private let posterImageView = UIImageView()
   private let rootStackView = UIStackView()
   private let sequenceAndDateLabel = UILabel()
@@ -96,20 +96,20 @@ final class EpisodeCell: UITableViewCell {
     self.blurbLabel.numberOfLines = 0
     self.blurbLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
 
-    self.labelsStackView.axis = .vertical
-    self.labelsStackView.layoutMargins = .init(top: 24, left: 24, bottom: 32, right: 24)
-    self.labelsStackView.isLayoutMarginsRelativeArrangement = true
-    self.labelsStackView.spacing = 12
-    self.labelsStackView.alignment = .leading
-    self.labelsStackView.addArrangedSubview(self.sequenceAndDateLabel)
-    self.labelsStackView.addArrangedSubview(self.titleLabel)
-    self.labelsStackView.addArrangedSubview(self.blurbLabel)
-    self.labelsStackView.addArrangedSubview(self.watchNowButton)
+    self.contentStackView.axis = .vertical
+    self.contentStackView.layoutMargins = .init(top: 24, left: 24, bottom: 32, right: 24)
+    self.contentStackView.isLayoutMarginsRelativeArrangement = true
+    self.contentStackView.spacing = 12
+    self.contentStackView.alignment = .leading
+    self.contentStackView.addArrangedSubview(self.sequenceAndDateLabel)
+    self.contentStackView.addArrangedSubview(self.titleLabel)
+    self.contentStackView.addArrangedSubview(self.blurbLabel)
+    self.contentStackView.addArrangedSubview(self.watchNowButton)
 
     self.rootStackView.translatesAutoresizingMaskIntoConstraints = false
     self.rootStackView.axis = .vertical
     self.rootStackView.addArrangedSubview(self.posterImageView)
-    self.rootStackView.addArrangedSubview(self.labelsStackView)
+    self.rootStackView.addArrangedSubview(self.contentStackView)
 
     self.sequenceAndDateLabel.font = UIFont.preferredFont(forTextStyle: .caption1).smallCaps
 
