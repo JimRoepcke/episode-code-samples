@@ -24,14 +24,14 @@ let baseTableViewCellStyle = concat(
   mut(\.selectionStyle, .none),
   mut(\.layoutMargins, .zero),
   { generousMargins($0.contentView) }
-)
+) 
 
 let baseStackViewStyle = concat(
   autolayoutStyle,
   generousMargins,
   enableMargins,
   verticalStackViewStyle,
-  mut(\UIStackView.spacing, .pf_grid(6))
+  mut(\UIStackView.spacing, .pf_grid(3))
 )
 
 let longFormLabelStyle = concat(
@@ -102,7 +102,7 @@ let horizontalButtonsStackView = concat(
 final class SubscribeCalloutCell: UITableViewCell {
   private let bodyLabel = UILabel()
   private let buttonsStackView = UIStackView()
-  private let containerView = UIView()
+  private let cardView = UIView()
   private let loginButton = UIButton()
   private let orLabel = UILabel()
   private let rootStackView = UIStackView()
@@ -121,14 +121,14 @@ final class SubscribeCalloutCell: UITableViewCell {
     with(self, baseTableViewCellStyle)
     with(self.titleLabel, titleLabelStyle)
     with(self.bodyLabel, longFormLabelStyle)
-    with(self.containerView, concat(calloutContainerViewStyle, autolayoutStyle))
+    with(self.cardView, concat(calloutContainerViewStyle, autolayoutStyle))
     with(self.rootStackView, concat(baseStackViewStyle, leadingStackViewStyle))
     with(self.subscribeButton, concat(primaryButtonStyle))
     with(self.loginButton, secondaryTextButtonStyle)
     with(self.buttonsStackView, horizontalButtonsStackView)
     self.orLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
 
-    self.contentView.addSubview(self.containerView)
+    self.contentView.addSubview(self.cardView)
     self.rootStackView.addArrangedSubview(self.titleLabel)
     self.rootStackView.addArrangedSubview(self.bodyLabel)
     self.rootStackView.addArrangedSubview(self.buttonsStackView)
@@ -143,10 +143,10 @@ final class SubscribeCalloutCell: UITableViewCell {
       self.rootStackView.trailingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.trailingAnchor),
       self.rootStackView.bottomAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.bottomAnchor),
 
-      self.containerView.leadingAnchor.constraint(equalTo: self.rootStackView.leadingAnchor),
-      self.containerView.topAnchor.constraint(equalTo: self.rootStackView.topAnchor),
-      self.containerView.trailingAnchor.constraint(equalTo: self.rootStackView.trailingAnchor),
-      self.containerView.bottomAnchor.constraint(equalTo: self.rootStackView.bottomAnchor),
+      self.cardView.leadingAnchor.constraint(equalTo: self.rootStackView.leadingAnchor),
+      self.cardView.topAnchor.constraint(equalTo: self.rootStackView.topAnchor),
+      self.cardView.trailingAnchor.constraint(equalTo: self.rootStackView.trailingAnchor),
+      self.cardView.bottomAnchor.constraint(equalTo: self.rootStackView.bottomAnchor),
       ])
   }
 
