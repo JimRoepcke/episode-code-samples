@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Episodes.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Refactor.playground">
+   </FileRef>
+   <FileRef
+      location = "group:FirstAttempt.playground">
+   </FileRef>
+   <FileRef
+      location = "group:Vendor/swift-overture/Overture.xcodeproj">
+   </FileRef>
+</Workspace>
