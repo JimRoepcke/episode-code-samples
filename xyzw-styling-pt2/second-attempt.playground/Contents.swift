@@ -3,86 +3,10 @@ import Overture
 import PlaygroundSupport
 import UIKit
 
-extension CGFloat {
-  static func pf_grid(_ n: Int) -> CGFloat {
-    return CGFloat(n) * 4.0
-  }
-}
-
-let bolded: (inout UIFont!) -> Void = { $0 = $0.bolded }
-
-let baseTextButtonStyle = concat(
-  mut(\UIButton.titleLabel!.font, UIFont.preferredFont(forTextStyle: .subheadline)),
-  mver(\UIButton.titleLabel!.font, bolded)
-)
-
-let primaryTextButtonStyle = concat(
-  baseTextButtonStyle,
-  { $0.setTitleColor(.pf_purple, for: .normal) }
-)
-
-let secondaryTextButtonStyle = concat(
-  baseTextButtonStyle,
-  { $0.setTitleColor(.black, for: .normal) }
-)
-
-let baseButtonStyle = concat(
-  baseTextButtonStyle,
-  mut(\UIButton.contentEdgeInsets, .init(top: .pf_grid(2), left: .pf_grid(4), bottom: .pf_grid(2), right: .pf_grid(4)))
-)
-
-func roundedStyle(cornerRadius: CGFloat) -> (UIView) -> Void {
-  return concat(
-    mut(\.layer.cornerRadius, cornerRadius),
-    mut(\.layer.masksToBounds, true)
-  )
-}
-
-let baseRoundedStyle = roundedStyle(cornerRadius: 6)
-
-let baseFilledButton = concat(
-  baseButtonStyle,
-  baseRoundedStyle
-)
-
-extension UIButton {
-  var normalBackgroundImage: UIImage? {
-    get { return self.backgroundImage(for: .normal) }
-    set { self.setBackgroundImage(newValue, for: .normal) }
-  }
-  var normalTitleColor: UIColor? {
-    get { return self.titleColor(for: .normal) }
-    set { self.setTitleColor(newValue, for: .normal) }
-  }
-}
-
-let primaryButtonStyle = concat(
-  baseFilledButton,
-  mut(\.normalTitleColor, .white),
-  mut(\.normalBackgroundImage, .from(color: .pf_purple))
-)
-
-let generousMargins =
-  mut(\UIView.layoutMargins, .init(top: .pf_grid(6), left: .pf_grid(6), bottom: .pf_grid(6), right: .pf_grid(6)))
-
-let autolayoutStyle =
-  mut(\UIView.translatesAutoresizingMaskIntoConstraints, false)
-let verticalStackView =
-  mut(\UIStackView.axis, .vertical)
-let enableStackViewMargins =
-  mut(\UIStackView.isLayoutMarginsRelativeArrangement, true)
-let baseStackViewStyle = concat(
-  autolayoutStyle,
-  verticalStackView,
-  generousMargins,
-  enableStackViewMargins,
-  mut(\.spacing, .pf_grid(3))
-  )
-
 final class SubscribeCalloutCell: UITableViewCell {
   private let bodyLabel = UILabel()
   private let buttonsStackView = UIStackView()
-  private let cardView = UIView()
+  private let containerView = UIView()
   private let loginButton = UIButton()
   private let orLabel = UILabel()
   private let rootStackView = UIStackView()
@@ -93,7 +17,7 @@ final class SubscribeCalloutCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
     self.selectionStyle = .none
-    self.contentView.layoutMargins = .init(top: .pf_grid(6), left: .pf_grid(6), bottom: .pf_grid(6), right: .pf_grid(6))
+    self.contentView.layoutMargins = .init(top: 24, left: 24, bottom: 24, right: 24)
 
     self.titleLabel.text = "Subscribe to Point-Free"
     self.titleLabel.font = UIFont.preferredFont(forTextStyle: .title3)
@@ -102,13 +26,17 @@ final class SubscribeCalloutCell: UITableViewCell {
     self.bodyLabel.numberOfLines = 0
     self.bodyLabel.font = UIFont.preferredFont(forTextStyle: UIFontTextStyle.subheadline)
 
-    self.cardView.backgroundColor = UIColor(white: 0.96, alpha: 1.0)
-    self.cardView.layoutMargins = .init(top: .pf_grid(6), left: .pf_grid(6), bottom: .pf_grid(6), right: .pf_grid(6))
-    self.cardView.translatesAutoresizingMaskIntoConstraints = false
-    self.contentView.addSubview(self.cardView)
+    self.containerView.backgroundColor = UIColor(white: 0.96, alpha: 1.0)
+    self.containerView.layoutMargins = .init(top: 24, left: 24, bottom: 24, right: 24)
+    self.containerView.translatesAutoresizingMaskIntoConstraints = false
+    self.contentView.addSubview(self.containerView)
 
     self.rootStackView.alignment = .leading
-    with(self.rootStackView, baseStackViewStyle)
+    self.rootStackView.spacing = 24
+    self.rootStackView.translatesAutoresizingMaskIntoConstraints = false
+    self.rootStackView.axis = .vertical
+    self.rootStackView.layoutMargins = .init(top: 24, left: 24, bottom: 24, right: 24)
+    self.rootStackView.isLayoutMarginsRelativeArrangement = true
     self.rootStackView.addArrangedSubview(self.titleLabel)
     self.rootStackView.addArrangedSubview(self.bodyLabel)
     self.rootStackView.addArrangedSubview(self.buttonsStackView)
@@ -118,12 +46,18 @@ final class SubscribeCalloutCell: UITableViewCell {
     self.orLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
 
     self.subscribeButton.setTitle("See subscription options", for: .normal)
-    with(self.subscribeButton, primaryButtonStyle)
+    self.subscribeButton.setTitleColor(.white, for: .normal)
+    self.subscribeButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline).bolded
+    self.subscribeButton.setBackgroundImage(.from(color: .pf_purple), for: .normal)
+    self.subscribeButton.layer.cornerRadius = 6
+    self.subscribeButton.layer.masksToBounds = true
+    self.subscribeButton.contentEdgeInsets = .init(top: 8, left: 16, bottom: 8, right: 16)
 
     self.loginButton.setTitle("Login", for: .normal)
-    with(self.loginButton, secondaryTextButtonStyle)
+    self.loginButton.setTitleColor(.black, for: .normal)
+    self.loginButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline).bolded
 
-    self.buttonsStackView.spacing = .pf_grid(2)
+    self.buttonsStackView.spacing = 8
     self.buttonsStackView.alignment = .firstBaseline
     self.buttonsStackView.addArrangedSubview(self.subscribeButton)
     self.buttonsStackView.addArrangedSubview(self.orLabel)
@@ -135,10 +69,10 @@ final class SubscribeCalloutCell: UITableViewCell {
       self.rootStackView.trailingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.trailingAnchor),
       self.rootStackView.bottomAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.bottomAnchor),
 
-      self.cardView.leadingAnchor.constraint(equalTo: self.rootStackView.leadingAnchor),
-      self.cardView.topAnchor.constraint(equalTo: self.rootStackView.topAnchor),
-      self.cardView.trailingAnchor.constraint(equalTo: self.rootStackView.trailingAnchor),
-      self.cardView.bottomAnchor.constraint(equalTo: self.rootStackView.bottomAnchor),
+      self.containerView.leadingAnchor.constraint(equalTo: self.rootStackView.leadingAnchor),
+      self.containerView.topAnchor.constraint(equalTo: self.rootStackView.topAnchor),
+      self.containerView.trailingAnchor.constraint(equalTo: self.rootStackView.trailingAnchor),
+      self.containerView.bottomAnchor.constraint(equalTo: self.rootStackView.bottomAnchor),
       ])
   }
 
@@ -162,10 +96,10 @@ final class EpisodeCell: UITableViewCell {
     self.blurbLabel.numberOfLines = 0
     self.blurbLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
 
-    with(self.contentStackView, concat(
-      baseStackViewStyle,
-      mut(\.layoutMargins.bottom, .pf_grid(8))
-    ))
+    self.contentStackView.axis = .vertical
+    self.contentStackView.layoutMargins = .init(top: 24, left: 24, bottom: 32, right: 24)
+    self.contentStackView.isLayoutMarginsRelativeArrangement = true
+    self.contentStackView.spacing = 12
     self.contentStackView.alignment = .leading
     self.contentStackView.addArrangedSubview(self.sequenceAndDateLabel)
     self.contentStackView.addArrangedSubview(self.titleLabel)
@@ -182,7 +116,8 @@ final class EpisodeCell: UITableViewCell {
     self.titleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
 
     self.watchNowButton.setTitle("Watch episode →", for: .normal)
-    with(self.watchNowButton, primaryTextButtonStyle)
+    self.watchNowButton.setTitleColor(.pf_purple, for: .normal)
+    self.watchNowButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout).bolded
 
     self.contentView.addSubview(self.rootStackView)
 

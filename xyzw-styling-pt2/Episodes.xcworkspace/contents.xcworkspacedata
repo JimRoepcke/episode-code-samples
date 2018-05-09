@@ -8,9 +8,12 @@
       location = "group:Refactor.playground">
    </FileRef>
    <FileRef
-      location = "group:FirstAttempt.playground">
+      location = "group:Vendor/swift-overture/Overture.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Vendor/swift-overture/Overture.xcodeproj">
+      location = "group:second-attempt.playground">
+   </FileRef>
+   <FileRef
+      location = "group:starting-point.playground">
    </FileRef>
 </Workspace>
