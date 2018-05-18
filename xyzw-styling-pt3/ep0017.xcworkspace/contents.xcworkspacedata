@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Styling-2.playground">
+      location = "group:Vendor/swift-overture/Overture.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../xyzw-styling-pt3/Vendor/swift-overture/Overture.xcodeproj">
+      location = "group:Styling-2.playground">
    </FileRef>
 </Workspace>
